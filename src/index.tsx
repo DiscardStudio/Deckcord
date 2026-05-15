@@ -31,7 +31,6 @@ import {
   VoiceChatChannel,
   VoiceChatMembers,
 } from "./components/VoiceChatViews";
-import { UploadScreenshot } from "./components/UploadScreenshot";
 
 declare global {
   interface Window {
@@ -192,7 +191,7 @@ const Content = () => {
         </PanelSectionRow>
         <hr></hr>
         <PanelSectionRow>
-          <UploadScreenshot />
+          
         </PanelSectionRow>
       </PanelSection>
     );

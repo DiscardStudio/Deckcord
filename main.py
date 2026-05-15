@@ -215,6 +215,11 @@ class Plugin:
         return await cls.evt_handler.disconnect_vc()
 
     @classmethod
+    async def connect_vc(cls, vc, guild):
+        logger.info("Connecting vc")
+        return await cls.evt_handler.connect_vc()
+
+    @classmethod
     async def set_ptt(cls, value):
         await cls.evt_handler.ws.send_json({"type": "$ptt", "value": value})
 
