@@ -415,6 +415,7 @@ window.Vencord.Plugins.plugins.Deckcord = {
                     if (data.type.startsWith("$")) {
                         let result;
                         try {
+                            const ChannelStore = Vencord.Webpack.Common.ChannelStore;
                             switch (data.type) {
                                 case "$getuser":
                                     result = Vencord.Webpack.Common.UserStore.getUser(data.id);
@@ -434,7 +435,6 @@ window.Vencord.Plugins.plugins.Deckcord = {
                                     break;
                                 case "$get_last_channels":
                                     result = {}
-                                    const ChannelStore = Vencord.Webpack.Common.ChannelStore;
                                     const GuildStore = Vencord.Webpack.Common.GuildStore;
                                     const channelIds = Object.values(JSON.parse(Vencord.Util.localStorage.SelectedChannelStore).mostRecentSelectedTextChannelIds);
                                     for (const chId of channelIds) {
