@@ -30,6 +30,7 @@ import {
   VoiceChatChannel,
   VoiceChatMembers,
 } from "./components/VoiceChatViews";
+import { VoiceChannels } from "./components/VoiceChannels";
 
 declare global {
   interface Window {
@@ -189,7 +190,7 @@ const Content = () => {
         </PanelSectionRow>
         <hr></hr>
         <PanelSectionRow>
-          
+          <VoiceChannels />
         </PanelSectionRow>
       </PanelSection>
     );

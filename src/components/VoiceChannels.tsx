@@ -2,21 +2,6 @@ import { call } from "@decky/api";
 import { DialogButton, Dropdown, DropdownOption } from "@decky/ui";
 import { useEffect, useState } from "react";
 
-function urlContentToDataUri(url: string) {
-  return fetch(url)
-    .then((response) => response.blob())
-    .then(
-      (blob) =>
-        new Promise((callback) => {
-          let reader = new FileReader();
-          reader.onload = function () {
-            callback(this.result);
-          };
-          reader.readAsDataURL(blob);
-        })
-    );
-}
-
 export function VoiceChannels() {
   const [selectedChannel, setChannel] = useState<any>();
   const [channels, setChannels] = useState<DropdownOption[]>([]);
