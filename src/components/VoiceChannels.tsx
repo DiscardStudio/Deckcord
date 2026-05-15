@@ -11,6 +11,7 @@ export function VoiceChannels() {
   useEffect(() => {
     call<[], Record<string, any>>("get_guilds")
       .then(res => {
+        console.log("Pulling guild information");
         if (!res || "error" in res)
           return;
         const nextGuilds: DropdownOption[] = Object.entries(res).map(([channelId, label]) => ({
@@ -21,12 +22,16 @@ export function VoiceChannels() {
         if (nextGuilds.length > 0) {
           setGuild(nextGuilds[0].data);
         }
+      })
+      .catch(err => {
+        console.error(err);
       });
   }, []);
 
   useEffect(() => {
     call<[], Record<string, any>>("get_voice_channels", selectedGuild)
     .then(res => {
+        console.log("Pulling Voice Channel information");
         if (!res || "error" in res)
           return;
 
@@ -37,6 +42,9 @@ export function VoiceChannels() {
 
         setChannels(voiceOptions);
     })
+    .catch(err => {
+      console.error(err);
+    });
   }, [selectedGuild])
 
   return (
@@ -49,13 +57,13 @@ export function VoiceChannels() {
           }}
           style={{
             height: "40px",
-            width: "40px",
+            width: "120px",
             minWidth: 0,
             padding: "10px 12px",
             marginRight: "10px",
           }}
         >
-          Leave Voice Channel
+          Disconnect
         </DialogButton>
       </span>
       <Dropdown
