@@ -453,8 +453,8 @@ window.Vencord.Plugins.plugins.Deckcord = {
                                     break;
                                 case "$get_guilds":
                                     const guildIds = Vencord.Webpack.Common.GuildStore.getGuilds();
-                                    result = {
-                                        guilds: guildIds
+                                    for (const [guildId, guildInfo] of guildIds) {
+                                        result[guildId] = `${guildInfo.name})`;
                                     }
                                     break;
                                 case "$get_screen_bounds":
