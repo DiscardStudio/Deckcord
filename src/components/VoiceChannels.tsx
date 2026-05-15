@@ -56,6 +56,23 @@ export function VoiceChannels() {
 
   return (
     <div>
+      <span>
+        <h3>{selectedChannel === undefined ? "No Active Voice" : selectedChannel}</h3>
+        <DialogButton
+          onClick={() => {
+            call("disconnect_vc");
+          }}
+          style={{
+            height: "40px",
+            width: "40px",
+            minWidth: 0,
+            padding: "10px 12px",
+            marginRight: "10px",
+          }}
+        >
+          Leave Voice Channel
+        </DialogButton>
+      </span>
       <Dropdown
         menuLabel="Guilds"
         selectedOption={selectedGuild}
@@ -73,29 +90,38 @@ export function VoiceChannels() {
           window.DISCORD_TAB.m_browserView.SetFocus(false);
         }}
       ></Dropdown>
-      <DialogButton
-        style={{ marginTop: "5px" }}
-        onClick={() => {
-          call("connect_vc", selectedChannel, selectedGuild);
-        }}
-      >
-        Join Voice
-      </DialogButton>
-
-    <DialogButton
-      onClick={() => {
-        call("disconnect_vc");
-      }}
-      style={{
-        height: "40px",
-        width: "40px",
-        minWidth: 0,
-        padding: "10px 12px",
-        marginRight: "10px",
-      }}
-    >
-      Leave Voice Channel
-    </DialogButton>
+      <div>
+        {renderVoiceChannels(selectedGuild, channels)}
+      </div>
     </div>
   );
+}
+
+function renderVoiceChannels(guildId: string, voiceChannels: DropdownOption[]) {
+  return voiceChannels.map((elem, i, arr) => {
+    (
+      <div>
+        <span>
+          <h4>{elem.label}</h4>
+          {renderJoinButton(guildId, elem.data)}
+        </span>
+        <span>
+          
+        </span>
+        </div>
+    )
+  })
+}
+
+function renderJoinButton(guildId: string, voiceId: string) {
+  return (
+    <DialogButton
+      style={{ marginTop: "5px" }}
+      onClick={() => {
+        call("connect_vc", voiceId, guildId);
+      }}
+    >
+      Join Voice
+    </DialogButton>
+  )
 }
