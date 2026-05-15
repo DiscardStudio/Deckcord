@@ -25,7 +25,6 @@ import {
 
 import { MuteButton } from "./components/buttons/MuteButton";
 import { DeafenButton } from "./components/buttons/DeafenButton";
-import { DisconnectButton } from "./components/buttons/DisconnectButton";
 import { PushToTalkButton } from "./components/buttons/PushToTalk";
 import {
   VoiceChatChannel,
@@ -152,7 +151,6 @@ const Content = () => {
           <Focusable style={{ display: "flex", justifyContent: "center" }}>
             <MuteButton />
             <DeafenButton />
-            <DisconnectButton />
           </Focusable>
         </PanelSectionRow>
         <PanelSectionRow>

@@ -17,42 +17,49 @@ function urlContentToDataUri(url: string) {
     );
 }
 
-export function UploadScreenshot() {
-  const [screenshot, setScreenshot] = useState<any>();
+export function VoiceChannels() {
   const [selectedChannel, setChannel] = useState<any>();
   const [channels, setChannels] = useState<DropdownOption[]>([]);
-  const [uploadButtonDisabled, setUploadButtonDisabled] =
-    useState<boolean>(false);
+  const [selectedGuild, setGuild] = useState<any>();
+  const [guilds, setGuilds] = useState<DropdownOption[]>([]);
 
   useEffect(() => {
-    call<[], Record<string, any>>("get_last_channels")
+    call<[], Record<string, any>>("get_guilds")
       .then(res => {
         if (!res || "error" in res)
           return;
-        const nextChannels: DropdownOption[] = Object.entries(res).map(([channelId, label]) => ({
+        const nextGuilds: DropdownOption[] = Object.entries(res).map(([channelId, label]) => ({
           data: channelId,
           label: String(label),
         }));
-        setChannels(nextChannels);
-        if (nextChannels.length > 0) {
-          setChannel(nextChannels[0].data);
+        setGuilds(nextGuilds);
+        if (nextGuilds.length > 0) {
+          setGuild(nextGuilds[0].data);
         }
       });
-
-    SteamClient.Screenshots.GetLastScreenshotTaken().then((res: any) => setScreenshot(res));
   }, []);
+
+  useEffect(() => {
+    call<[], Record<string, any>>("get_voice_channels", selectedGuild)
+    .then(res => {
+        if (!res || "error" in res)
+          return;
+
+        const voiceOptions: DropdownOption[] = Object.entries(res).map(([channelId, label]) => ({
+          data: channelId,
+          label: String(label),
+        }));
+
+        setChannels(voiceOptions);
+    })
+  }, [selectedGuild])
 
   return (
     <div>
-      <img
-        width={240}
-        height={160}
-        src={"https://steamloopback.host/" + screenshot?.strUrl}
-      ></img>
       <Dropdown
-        menuLabel="Last Channels"
-        selectedOption={selectedChannel}
-        rgOptions={channels}
+        menuLabel="Guilds"
+        selectedOption={selectedGuild}
+        rgOptions={guilds}
         onChange={(e: { data: any; }) => {
           setChannel(e.data);
 
@@ -68,19 +75,27 @@ export function UploadScreenshot() {
       ></Dropdown>
       <DialogButton
         style={{ marginTop: "5px" }}
-        disabled={uploadButtonDisabled || !selectedChannel || !screenshot?.strUrl}
-        onClick={async () => {
-          setUploadButtonDisabled(true);
-          try {
-            const data = await urlContentToDataUri(`https://steamloopback.host/${screenshot.strUrl}`);
-            await call("post_screenshot", selectedChannel, data);
-          } finally {
-            setUploadButtonDisabled(false);
-          }
+        onClick={() => {
+          call("connect_vc", selectedChannel, selectedGuild);
         }}
       >
-        Upload
+        Join Voice
       </DialogButton>
+
+    <DialogButton
+      onClick={() => {
+        call("disconnect_vc");
+      }}
+      style={{
+        height: "40px",
+        width: "40px",
+        minWidth: 0,
+        padding: "10px 12px",
+        marginRight: "10px",
+      }}
+    >
+      Leave Voice Channel
+    </DialogButton>
     </div>
   );
 }

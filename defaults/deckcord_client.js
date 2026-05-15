@@ -443,6 +443,20 @@ window.Vencord.Plugins.plugins.Deckcord = {
                                         result[chId] = `${ch.name} (${guild.name})`;
                                     }
                                     break;
+                                case "$get_voice_channels":
+                                    result = {}
+                                    const voiceChannelIds = Vencord.Webpack.Common.GuildChannelStore.getVoiceChannelIds(data.selectedGuild);
+                                    for (const chId of voiceChannelIds) {
+                                        const ch = ChannelStore.getChannel(chId);
+                                        result[chId] = `${ch.name})`;
+                                    }
+                                    break;
+                                case "$get_guilds":
+                                    const guildIds = Vencord.Webpack.Common.GuildStore.getGuilds();
+                                    result = {
+                                        guilds: guildIds
+                                    }
+                                    break;
                                 case "$get_screen_bounds":
                                     result = { width: screen.width, height: screen.height }
                                     break;

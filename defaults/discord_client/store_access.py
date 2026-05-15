@@ -85,6 +85,12 @@ class StoreAccess:
     async def get_last_channels(self):
         return await self._store_access_request("$get_last_channels")
 
+    async def get_guilds(self):
+        return await self._store_access_request("$get_guilds")
+
+    async def get_voice_channels(self, selectedGuild):
+        return await self._store_access_request("$get_voice_channels", selectedGuild=selectedGuild)
+
     async def post_screenshot(self, channel_id, data):
         return await self._store_access_request("$screenshot", channel_id=channel_id, attachment_b64=data)
 
