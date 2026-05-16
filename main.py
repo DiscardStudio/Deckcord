@@ -215,6 +215,11 @@ class Plugin:
         return await cls.evt_handler.disconnect_vc()
 
     @classmethod
+    async def connect_vc(cls, vc, guild):
+        logger.info("Connecting vc")
+        return await cls.evt_handler.connect_vc()
+
+    @classmethod
     async def set_ptt(cls, value):
         await cls.evt_handler.ws.send_json({"type": "$ptt", "value": value})
 
@@ -230,6 +235,14 @@ class Plugin:
     @classmethod
     async def get_last_channels(cls):
         return await cls.evt_handler.api.get_last_channels()
+
+    @classmethod
+    async def get_guilds(cls):
+        return await cls.evt_handler.api.get_guilds()
+
+    @classmethod
+    async def get_voice_channels(cls, selectedGuild):
+        return await cls.evt_handler.api.get_voice_channels(selectedGuild=selectedGuild)
 
     @classmethod
     async def post_screenshot(cls, channel_id, data):

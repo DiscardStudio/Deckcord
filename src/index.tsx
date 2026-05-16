@@ -25,13 +25,12 @@ import {
 
 import { MuteButton } from "./components/buttons/MuteButton";
 import { DeafenButton } from "./components/buttons/DeafenButton";
-import { DisconnectButton } from "./components/buttons/DisconnectButton";
 import { PushToTalkButton } from "./components/buttons/PushToTalk";
 import {
   VoiceChatChannel,
   VoiceChatMembers,
 } from "./components/VoiceChatViews";
-import { UploadScreenshot } from "./components/UploadScreenshot";
+import { VoiceChannels } from "./components/VoiceChannels";
 
 declare global {
   interface Window {
@@ -153,7 +152,6 @@ const Content = () => {
           <Focusable style={{ display: "flex", justifyContent: "center" }}>
             <MuteButton />
             <DeafenButton />
-            <DisconnectButton />
           </Focusable>
         </PanelSectionRow>
         <PanelSectionRow>
@@ -192,7 +190,7 @@ const Content = () => {
         </PanelSectionRow>
         <hr></hr>
         <PanelSectionRow>
-          <UploadScreenshot />
+          <VoiceChannels />
         </PanelSectionRow>
       </PanelSection>
     );

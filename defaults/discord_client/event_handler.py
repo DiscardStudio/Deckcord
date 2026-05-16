@@ -96,6 +96,9 @@ class EventHandler:
     async def disconnect_vc(self):
         await self.ws.send_json({"type":"VOICE_CHANNEL_SELECT","guildId":None,"channelId":None,"currentVoiceChannelId":self.vc_channel_id,"video":False,"stream":False})
 
+    async def connect_vc(self, *args, vc=None, guildId=None):
+        await self.ws.send_json({"type":"VOICE_CHANNEL_SELECT","guildId":guildId,"channelId":vc,"currentVoiceChannelId":self.vc_channel_id,"video":False,"stream":False})
+
     async def main(self, ws):
         logger.info("Received WS Connection. Starting event processing loop")
         self.ws = ws

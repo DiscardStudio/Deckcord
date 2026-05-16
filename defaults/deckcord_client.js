@@ -415,6 +415,7 @@ window.Vencord.Plugins.plugins.Deckcord = {
                     if (data.type.startsWith("$")) {
                         let result;
                         try {
+                            const ChannelStore = Vencord.Webpack.Common.ChannelStore;
                             switch (data.type) {
                                 case "$getuser":
                                     result = Vencord.Webpack.Common.UserStore.getUser(data.id);
@@ -434,13 +435,27 @@ window.Vencord.Plugins.plugins.Deckcord = {
                                     break;
                                 case "$get_last_channels":
                                     result = {}
-                                    const ChannelStore = Vencord.Webpack.Common.ChannelStore;
                                     const GuildStore = Vencord.Webpack.Common.GuildStore;
                                     const channelIds = Object.values(JSON.parse(Vencord.Util.localStorage.SelectedChannelStore).mostRecentSelectedTextChannelIds);
                                     for (const chId of channelIds) {
                                         const ch = ChannelStore.getChannel(chId);
                                         const guild = GuildStore.getGuild(ch.guild_id);
                                         result[chId] = `${ch.name} (${guild.name})`;
+                                    }
+                                    break;
+                                case "$get_voice_channels":
+                                    result = {}
+                                    const voiceChannelIds = Vencord.Webpack.Common.GuildChannelStore.getVoiceChannelIds(data.selectedGuild);
+                                    for (const chId of voiceChannelIds) {
+                                        const ch = ChannelStore.getChannel(chId);
+                                        result[chId] = `${ch.name})`;
+                                    }
+                                    break;
+                                case "$get_guilds":
+                                    result = {}
+                                    const guildIds = Vencord.Webpack.Common.GuildStore.getGuilds();
+                                    for (const [guildId, guildInfo] of guildIds) {
+                                        result[guildId] = `${guildInfo.name})`;
                                     }
                                     break;
                                 case "$get_screen_bounds":
@@ -519,6 +534,9 @@ window.Vencord.Plugins.plugins.Deckcord = {
                                     }
                                     window._pendingFileInput = null;
                                     return;
+                                default:
+                                    result = { error: `Command not recognized: ${data}`}
+                                    console.error(result.error);
                             }
                         } catch (error) {
                             result = { error: error }
