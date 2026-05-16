@@ -452,6 +452,7 @@ window.Vencord.Plugins.plugins.Deckcord = {
                                     }
                                     break;
                                 case "$get_guilds":
+                                    result = {}
                                     const guildIds = Vencord.Webpack.Common.GuildStore.getGuilds();
                                     for (const [guildId, guildInfo] of guildIds) {
                                         result[guildId] = `${guildInfo.name})`;
