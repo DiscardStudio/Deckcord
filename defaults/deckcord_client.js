@@ -536,6 +536,7 @@ window.Vencord.Plugins.plugins.Deckcord = {
                                     return;
                             }
                         } catch (error) {
+                            console.error(error);
                             result = { error: error }
                             if (data.increment == undefined) return;
                         }
