@@ -12,6 +12,7 @@ export function VoiceChannels() {
     call<[], Record<string, any>>("get_guilds")
       .then(res => {
         console.log("Pulling guild information");
+        console.log({ res });
         if (!res || "error" in res)
           return;
         const nextGuilds: DropdownOption[] = Object.entries(res).map(([channelId, label]) => ({
@@ -22,8 +23,6 @@ export function VoiceChannels() {
         if (nextGuilds.length > 0) {
           setGuild(nextGuilds[0].data);
         }
-
-        console.log("Guild Info", nextGuilds);
       })
       .catch(err => {
         console.error(err);
@@ -34,6 +33,7 @@ export function VoiceChannels() {
     call<[], Record<string, any>>("get_voice_channels", selectedGuild)
     .then(res => {
         console.log("Pulling Voice Channel information");
+        console.log({ res });
         if (!res || "error" in res)
           return;
 
@@ -43,7 +43,6 @@ export function VoiceChannels() {
         }));
 
         setChannels(voiceOptions);
-        console.log("Voice Info", voiceOptions);
     })
     .catch(err => {
       console.error(err);
