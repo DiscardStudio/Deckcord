@@ -30,7 +30,7 @@ export function VoiceChannels() {
   }, []);
 
   useEffect(() => {
-    call<[], Record<string, any>>("get_voice_channels", selectedGuild)
+    call<[], Record<string, any>>("get_voice_channels", "1040699077437960274")
     .then(res => {
         console.log("Pulling Voice Channel information");
         console.log({ res });
