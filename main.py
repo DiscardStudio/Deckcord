@@ -238,11 +238,11 @@ class Plugin:
 
     @classmethod
     async def get_guilds(cls):
-        return await cls.evt_handler.api.get_guilds()
+        return await cls.evt_handler.get_guilds()
 
     @classmethod
     async def get_voice_channels(cls, selectedGuild):
-        return await cls.evt_handler.ws.send_json({"type": "$get_voice_channels", "selectedGuild": selectedGuild})
+        return await cls.evt_handler.api.get_voice_channels(selectedGuild=selectedGuild)
 
     @classmethod
     async def post_screenshot(cls, channel_id, data):
