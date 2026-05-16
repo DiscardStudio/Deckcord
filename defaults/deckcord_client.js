@@ -534,8 +534,9 @@ window.Vencord.Plugins.plugins.Deckcord = {
                                     }
                                     window._pendingFileInput = null;
                                     return;
-                                    default:
-                                        console.error(`Command not recognized: ${data}`);
+                                default:
+                                    result = { error: `Command not recognized: ${data}`}
+                                    console.error(result.error);
                             }
                         } catch (error) {
                             result = { error: error }
