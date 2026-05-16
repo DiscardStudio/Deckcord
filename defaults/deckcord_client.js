@@ -414,7 +414,7 @@ window.Vencord.Plugins.plugins.Deckcord = {
                     const data = JSON.parse(e.data);
                     if (data.type.startsWith("$")) {
                         let result;
-                        try {
+                        // try {
                             const ChannelStore = Vencord.Webpack.Common.ChannelStore;
                             switch (data.type) {
                                 case "$getuser":
@@ -535,11 +535,10 @@ window.Vencord.Plugins.plugins.Deckcord = {
                                     window._pendingFileInput = null;
                                     return;
                             }
-                        } catch (error) {
-                            console.error(error);
-                            result = { error: error }
-                            if (data.increment == undefined) return;
-                        }
+                        // } catch (error) {
+                            // result = { error: error }
+                            // if (data.increment == undefined) return;
+                        // }
                         const payload = {
                             type: "$deckcord_request",
                             increment: data.increment,
